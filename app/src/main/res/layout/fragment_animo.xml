@@ -13,7 +13,7 @@
             android:background="@color/white"
             android:paddingLeft="10dp"
             tools:context=".activities.MainActivity"
-            tools:listitem="@layout/apps_item_list"/>
+            tools:listitem="@layout/item_scalable"/>
 
     <FrameLayout
             android:id="@+id/containerNoInternetMessage"

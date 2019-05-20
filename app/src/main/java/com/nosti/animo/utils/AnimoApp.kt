@@ -5,7 +5,7 @@ import android.content.Context
 import com.nosti.animo.R
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 
-class App : Application() {
+class AnimoApp : Application() {
 
     private var context: Context = applicationContext
 

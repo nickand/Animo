@@ -3,17 +3,16 @@ package com.nosti.animo.activities
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.nosti.animo.BaseActivity
 import com.nosti.animo.R
 import com.nosti.animo.fragments.BaseFragment
-import com.nosti.animo.listeners.OnClickActivityListener
+import com.nosti.animo.listeners.OnSetTitleAndNavigateListener
 import com.thefinestartist.finestwebview.FinestWebView
 import kotlinx.android.synthetic.main.activity_categories.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
-class CategoriesActivity : BaseActivity(), OnClickActivityListener {
+class CategoriesActivity : BaseActivity(), OnSetTitleAndNavigateListener {
 
     private var mFragment: Fragment? = null
 

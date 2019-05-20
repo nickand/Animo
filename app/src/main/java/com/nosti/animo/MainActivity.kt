@@ -7,14 +7,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.nosti.animo.fragments.AppsFragment
+import com.nosti.animo.fragments.AnimoFragment
 import com.nosti.animo.fragments.BaseFragment
-import com.nosti.animo.listeners.OnClickActivityListener
+import com.nosti.animo.listeners.OnSetTitleAndNavigateListener
 import com.thefinestartist.finestwebview.FinestWebView
 import kotlinx.android.synthetic.main.activity_main.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
-class MainActivity : BaseActivity(), OnClickActivityListener {
+
+class MainActivity : BaseActivity(), OnSetTitleAndNavigateListener {
 
     private var mFragment: Fragment? = null
 
@@ -23,14 +24,14 @@ class MainActivity : BaseActivity(), OnClickActivityListener {
 
         initViews()
 
-        navigateToAppsFragment()
+        navigateToAnimoFragment()
 
         checkNetworkConnection()
     }
 
-    private fun navigateToAppsFragment() {
-        var fragment: Fragment?
-        fragment = AppsFragment.newInstance()
+    private fun navigateToAnimoFragment() {
+        val fragment: Fragment?
+        fragment = AnimoFragment.newInstance()
         navigateTo((fragment as BaseFragment?)!!)
     }
 
@@ -40,6 +41,12 @@ class MainActivity : BaseActivity(), OnClickActivityListener {
         setTitleToolbar(getString(R.string.app_name))
         setSupportActionBar(containerToolbar)
 
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.action_dashboard -> {navigateToAnimoFragment()}
+            }
+            true
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -53,7 +60,6 @@ class MainActivity : BaseActivity(), OnClickActivityListener {
 
         if (id == R.id.action_settings) {
             containerToolbar.visibility = View.GONE
-            //navigateTo(AboutMeFragment())
             return true
         }
 
@@ -82,10 +88,10 @@ class MainActivity : BaseActivity(), OnClickActivityListener {
 
         } else {
 
-            fragmentTransaction.setCustomAnimations(
+            /*fragmentTransaction.setCustomAnimations(
                 R.anim.enter_from_right, R.anim.exit_to_left,
                 R.anim.enter_from_left, R.anim.exit_to_right
-            )
+            )*/
             fragmentTransaction.replace(R.id.fragment_container, fragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
@@ -105,12 +111,11 @@ class MainActivity : BaseActivity(), OnClickActivityListener {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         containerToolbar.visibility = View.VISIBLE
+        navigateToAnimoFragment()
     }
 
     companion object {
-
         private val CLASS_TAG = MainActivity::class.java.simpleName
     }
 }

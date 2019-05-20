@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#18C67F</color>
-    <color name="colorPrimaryDark">#009452</color>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#63faaf</color>
     <color name="white">#FFFFFF</color>
     <color name="blue">#365899</color>
@@ -9,7 +9,7 @@
     <color name="yellow">#FFD935</color>
     <color name="red">#BF360C</color>
 
-    <color name="line_bg_anime">#FF1043</color>
-    <color name="fab_bg_anime">#cc0c35</color>
+    <color name="line_bg_anime">@color/grey_hex_1e</color>
+    <color name="fab_bg_anime">@color/grey_hex_1e</color>
     <color name="black_anime">#3B3B3B</color>
 </resources>

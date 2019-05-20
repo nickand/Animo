@@ -13,7 +13,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.nosti.animo.R
 import com.nosti.animo.extensions.inflate
-import com.nosti.animo.listeners.OnClickActivityListener
+import com.nosti.animo.listeners.OnSetTitleAndNavigateListener
 import com.nosti.animo.models.AnimeData
 import kotlinx.android.synthetic.main.fragment_detail_app.*
 
@@ -22,7 +22,7 @@ class DetailFragment : BaseFragment(), View.OnClickListener {
     private var data: AnimeData? = null
     private var isShowing = false
 
-    private var mListener: OnClickActivityListener? = null
+    private var mListener: OnSetTitleAndNavigateListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +30,6 @@ class DetailFragment : BaseFragment(), View.OnClickListener {
             Log.d(CLASS_TAG, " getting args")
 
             data = arguments?.getParcelable(ARG_PARAM1)
-
-            //Log.d(CLASS_TAG, data?.attributes?.coverImage?.large)
         }
     }
 
@@ -107,10 +105,10 @@ class DetailFragment : BaseFragment(), View.OnClickListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnClickActivityListener) {
+        if (context is OnSetTitleAndNavigateListener) {
             mListener = context
         } else {
-            throw RuntimeException("$context must implement OnClickActivityListener")
+            throw RuntimeException("$context must implement OnSetTitleAndNavigateListener")
         }
     }
 

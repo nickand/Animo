@@ -65,7 +65,7 @@
                     android:paddingLeft="10dp"
                     app:layoutManager="LinearLayoutManager"
                     tools:context=".activities.MainActivity"
-                    tools:listitem="@layout/apps_item_list"/>
+                    tools:listitem="@layout/animes_item_list"/>
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

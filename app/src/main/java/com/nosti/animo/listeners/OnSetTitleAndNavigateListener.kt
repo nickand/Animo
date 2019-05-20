@@ -3,7 +3,7 @@ package com.nosti.animo.listeners
 import android.app.Activity
 import com.nosti.animo.fragments.BaseFragment
 
-interface OnClickActivityListener {
+interface OnSetTitleAndNavigateListener {
 
     fun setTitleToolbar(title: String)
     fun navigateTo(fragment: BaseFragment)
