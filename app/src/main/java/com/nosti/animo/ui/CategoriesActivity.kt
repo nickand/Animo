@@ -1,18 +1,16 @@
-package com.nosti.animo.activities
+package com.nosti.animo.ui
 
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.nosti.animo.BaseActivity
 import com.nosti.animo.R
-import com.nosti.animo.fragments.BaseFragment
-import com.nosti.animo.listeners.OnSetTitleAndNavigateListener
 import com.thefinestartist.finestwebview.FinestWebView
 import kotlinx.android.synthetic.main.activity_categories.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
-class CategoriesActivity : BaseActivity(), OnSetTitleAndNavigateListener {
+class CategoriesActivity : AppCompatActivity(), OnSetTitleAndNavigateListener {
 
     private var mFragment: Fragment? = null
 
@@ -22,8 +20,6 @@ class CategoriesActivity : BaseActivity(), OnSetTitleAndNavigateListener {
         initViews()
 
         navigateToCategoriesFragment()
-
-        checkNetworkConnection()
     }
 
     private fun initViews() {
@@ -46,11 +42,11 @@ class CategoriesActivity : BaseActivity(), OnSetTitleAndNavigateListener {
         toolbarTitle.setText(title)
     }
 
-    override fun navigateTo(fragment: BaseFragment) {
+    override fun navigateTo(fragment: Fragment) {
         navigateTo(fragment, true)
     }
 
-    override fun navigateTo(fragment: BaseFragment, addToBackStack: Boolean) {
+    override fun navigateTo(fragment: Fragment, addToBackStack: Boolean) {
         val manager = supportFragmentManager
 
         if (!addToBackStack) {

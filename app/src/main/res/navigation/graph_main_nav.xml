@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/graph_main_nav"
+            app:startDestination="@id/mainFragment">
+
+    <fragment
+            android:id="@+id/mainFragment"
+            android:name="com.nosti.animo.ui.AnimoFragment"
+            android:label="MainMenuFragment"
+            tools:layout="@layout/fragment_animo">
+        <action android:id="@+id/action_mainFragment_to_detailFragment" app:destination="@id/detailFragment"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/detailFragment"
+            android:name="com.nosti.animo.ui.DetailFragment"
+            android:label="DetailFragment"/>
+
+    <!-- Global actions -->
+    <action
+            android:id="@+id/action_global_popStack"
+            app:destination="@+id/graph_main_nav"
+            app:popUpTo="@+id/graph_main_nav"
+            app:popUpToInclusive="true"/>
+
+    <!--<action-->
+    <!--android:id="@+id/action_global_mainMenuFragment"-->
+    <!--app:destination="@id/mainMenuFragment" />-->
+    <!--<action-->
+    <!--android:id="@+id/action_global_liveClassesFragment"-->
+    <!--app:destination="@id/liveClassesFragment"-->
+    <!--app:popUpTo="@id/liveClassesFragment"-->
+    <!--app:popUpToInclusive="true" />-->
+
+</navigation>

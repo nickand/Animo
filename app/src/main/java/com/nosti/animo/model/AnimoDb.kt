@@ -1,8 +1,7 @@
-package com.nosti.animo.models
+package com.nosti.animo.model
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.nosti.animo.network.AnimeApiResponse
-import com.nosti.animo.utils.Constants
+import com.nosti.animo.ui.common.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.nosti.animo.utils.ScaleRelativeLayout
+    <com.nosti.animo.ui.common.ScaleRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_margin">
@@ -16,7 +16,7 @@
             android:layout_gravity="center"
             android:scaleType="centerCrop" />
 
-    </com.nosti.animo.utils.ScaleRelativeLayout>
+    </com.nosti.animo.ui.common.ScaleRelativeLayout>
 
 
 </LinearLayout>

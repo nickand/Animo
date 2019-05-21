@@ -1,4 +1,4 @@
-package com.nosti.animo.models
+package com.nosti.animo.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

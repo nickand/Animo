@@ -1,4 +1,4 @@
-package com.nosti.animo.activities
+package com.nosti.animo.ui
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,6 @@ import android.os.Handler
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
-import com.nosti.animo.MainActivity
 import com.nosti.animo.R
 import kotlinx.android.synthetic.main.activity_splash.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper

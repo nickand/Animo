@@ -1,4 +1,4 @@
-package com.nosti.animo.extensions
+package com.nosti.animo.ui
 
 /**
  * Created by nicolas.g on 22/11/2017.
@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.nosti.animo.utils.AnimoApp
 import kotlin.properties.Delegates
 
 fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View {

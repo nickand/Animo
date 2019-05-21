@@ -1,3 +1,3 @@
-package com.nosti.animo.models
+package com.nosti.animo.model
 
 data class Anime(var data: List<AnimeData>)

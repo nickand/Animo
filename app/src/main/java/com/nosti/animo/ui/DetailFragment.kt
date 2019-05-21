@@ -1,4 +1,4 @@
-package com.nosti.animo.fragments
+package com.nosti.animo.ui
 
 import android.content.Context
 import android.net.Uri
@@ -8,16 +8,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.nosti.animo.R
-import com.nosti.animo.extensions.inflate
-import com.nosti.animo.listeners.OnSetTitleAndNavigateListener
-import com.nosti.animo.models.AnimeData
-import kotlinx.android.synthetic.main.fragment_detail_app.*
+import com.nosti.animo.model.AnimeData
+import kotlinx.android.synthetic.main.fragment_detail.*
 
-class DetailFragment : BaseFragment(), View.OnClickListener {
+class DetailFragment : Fragment(), View.OnClickListener {
 
     private var data: AnimeData? = null
     private var isShowing = false
@@ -56,7 +55,7 @@ class DetailFragment : BaseFragment(), View.OnClickListener {
 
     private fun initViews(container: ViewGroup?): View? {
 
-        return container?.inflate(R.layout.fragment_detail_app)
+        return container?.inflate(R.layout.fragment_detail)
     }
 
     private fun initViews() {

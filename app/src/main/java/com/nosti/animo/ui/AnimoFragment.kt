@@ -1,4 +1,4 @@
-package com.nosti.animo.fragments
+package com.nosti.animo.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,15 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nosti.animo.R
-import com.nosti.animo.adapters.AnimoAdapter
-import com.nosti.animo.extensions.inflate
-import com.nosti.animo.models.AnimoDb
+import com.nosti.animo.model.AnimoDb
+import com.nosti.animo.ui.common.CoroutineScopeFragment
 import kotlinx.android.synthetic.main.fragment_animo.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class AnimoFragment : BaseFragment() {
+class AnimoFragment : CoroutineScopeFragment() {
 
     private var mFragment: Fragment? = null
 
@@ -39,7 +38,7 @@ class AnimoFragment : BaseFragment() {
 
         animeList.setHasFixedSize(true)
 
-        GlobalScope.launch(Dispatchers.Main) {
+        launch(Dispatchers.Main) {
             val animes = AnimoDb.service
                 .getAnimeList()
                 .await()
@@ -50,7 +49,7 @@ class AnimoFragment : BaseFragment() {
         animeList.adapter = adapter
     }
 
-    fun navigateTo(fragment: BaseFragment, addToBackStack: Boolean) {
+    fun navigateTo(fragment: Fragment, addToBackStack: Boolean) {
         val manager = activity?.supportFragmentManager
 
         if (!addToBackStack) {

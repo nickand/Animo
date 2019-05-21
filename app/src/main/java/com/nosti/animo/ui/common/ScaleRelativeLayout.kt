@@ -1,4 +1,4 @@
-package com.nosti.animo.utils
+package com.nosti.animo.ui.common
 
 import android.annotation.TargetApi
 import android.content.Context

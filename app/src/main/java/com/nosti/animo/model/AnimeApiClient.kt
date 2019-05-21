@@ -1,6 +1,6 @@
-package com.nosti.animo.network
+package com.nosti.animo.model
 
-import com.nosti.animo.utils.Constants.Companion.BASE_URL
+import com.nosti.animo.ui.common.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,7 +14,7 @@ class AnimeApiClient {
         fun getClient(): Retrofit {
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
-                    .baseUrl(BASE_URL)
+                    .baseUrl(Constants.BASE_URL)
                     .client(getHttpClient())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()

@@ -1,16 +1,11 @@
-package com.nosti.animo.adapters
+package com.nosti.animo.ui
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.nosti.animo.R
-import com.nosti.animo.extensions.basicDiffUtil
-import com.nosti.animo.extensions.inflate
-import com.nosti.animo.extensions.loadUrl
-import com.nosti.animo.models.AnimeData
+import com.nosti.animo.model.AnimeData
 import kotlinx.android.synthetic.main.item_scalable.view.*
-import kotlin.properties.Delegates
 
 class AnimoAdapter(private val listener: (AnimeData) -> Unit) :
     RecyclerView.Adapter<AnimoAdapter.ViewHolder>() {
@@ -20,7 +15,7 @@ class AnimoAdapter(private val listener: (AnimeData) -> Unit) :
         areItemsTheSame = { old, new -> old.id == new.id }
     )
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimoAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = parent.inflate(R.layout.item_scalable, false)
         return ViewHolder(view)
     }
