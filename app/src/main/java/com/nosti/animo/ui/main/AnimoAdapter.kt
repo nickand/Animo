@@ -1,11 +1,15 @@
-package com.nosti.animo.ui
+package com.nosti.animo.ui.main
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nosti.animo.R
 import com.nosti.animo.model.AnimeData
+import com.nosti.animo.ui.basicDiffUtil
+import com.nosti.animo.ui.inflate
+import com.nosti.animo.ui.loadUrl
 import kotlinx.android.synthetic.main.item_scalable.view.*
+import kotlin.reflect.KFunction1
 
 class AnimoAdapter(private val listener: (AnimeData) -> Unit) :
     RecyclerView.Adapter<AnimoAdapter.ViewHolder>() {

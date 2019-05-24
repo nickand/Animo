@@ -1,4 +1,4 @@
-package com.nosti.animo.ui
+package com.nosti.animo.ui.detail
 
 import android.content.Context
 import android.net.Uri
@@ -9,14 +9,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.nosti.animo.R
 import com.nosti.animo.model.AnimeData
+import com.nosti.animo.ui.OnSetTitleAndNavigateListener
+import com.nosti.animo.ui.inflate
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment(), View.OnClickListener {
+
+    private lateinit var viewModel: DetailViewModel
 
     private var data: AnimeData? = null
     private var isShowing = false
@@ -36,40 +42,34 @@ class DetailFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return initViews(container)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initViews()
+        viewModel = ViewModelProviders.of(
+            this,
+            data?.let { DetailViewModelFactory(it) }
+        )[DetailViewModel::class.java]
+
+        viewModel.model.observe(this, Observer (::updateUi))
+
         setListeners()
     }
 
-    private fun setListeners() {
-        mListener!!.setTitleToolbar(data!!.attributes.canonicalTitle)
-        btnGoToWeb.setOnClickListener(this)
-        tvShowMore.setOnClickListener(this)
-    }
-
-    private fun initViews(container: ViewGroup?): View? {
-
-        return container?.inflate(R.layout.fragment_detail)
-    }
-
-    private fun initViews() {
+    private fun updateUi(model: DetailViewModel.UiModel) {
         btnGoToWeb.visibility = View.VISIBLE
         tvShowMore.visibility = View.VISIBLE
         tvTitleDescription.visibility = View.VISIBLE
 
-        tvDetailAppName.text = data!!.attributes.canonicalTitle
-        tvDetailDescription.text = data!!.attributes.synopsis
+        tvDetailAppName.text = model.anime.attributes.canonicalTitle
+        tvDetailDescription.text = model.anime.attributes.synopsis
 
         tvDetailAppMadeBy.text = data!!.attributes.endDate
 
-        val uri: Uri = parse(data!!.attributes.posterImage?.medium)
-        val path = getCoverImage(data!!.attributes.coverImage?.large)
+        val uri: Uri = parse(model.anime.attributes.posterImage?.medium)
+        val path = getCoverImage(model.anime.attributes.coverImage?.large)
         val uriCover: Uri = parse(path)
 
         activity?.applicationContext?.let {
@@ -93,6 +93,20 @@ class DetailFragment : Fragment(), View.OnClickListener {
                 )
                 .into(ivCoverApp)
         }
+    }
+
+    private fun setListeners() {
+        mListener!!.setTitleToolbar(data!!.attributes.canonicalTitle)
+        btnGoToWeb.setOnClickListener(this)
+        tvShowMore.setOnClickListener(this)
+    }
+
+    private fun initViews(container: ViewGroup?): View? {
+        return container?.inflate(R.layout.fragment_detail)
+    }
+
+    private fun initViews() {
+
 
     }
 

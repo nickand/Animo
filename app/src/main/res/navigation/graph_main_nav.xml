@@ -7,7 +7,7 @@
 
     <fragment
             android:id="@+id/mainFragment"
-            android:name="com.nosti.animo.ui.AnimoFragment"
+            android:name="com.nosti.animo.ui.main.AnimoFragment"
             android:label="MainMenuFragment"
             tools:layout="@layout/fragment_animo">
         <action android:id="@+id/action_mainFragment_to_detailFragment" app:destination="@id/detailFragment"/>
@@ -15,7 +15,7 @@
 
     <fragment
             android:id="@+id/detailFragment"
-            android:name="com.nosti.animo.ui.DetailFragment"
+            android:name="com.nosti.animo.ui.detail.DetailFragment"
             android:label="DetailFragment"/>
 
     <!-- Global actions -->
