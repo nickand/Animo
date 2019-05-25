@@ -42,37 +42,6 @@ class CategoriesActivity : AppCompatActivity(), OnSetTitleAndNavigateListener {
         toolbarTitle.setText(title)
     }
 
-    override fun navigateTo(fragment: Fragment) {
-        navigateTo(fragment, true)
-    }
-
-    override fun navigateTo(fragment: Fragment, addToBackStack: Boolean) {
-        val manager = supportFragmentManager
-
-        if (!addToBackStack) {
-            manager.popBackStackImmediate()
-        }
-
-        val fragmentTransaction = manager.beginTransaction()
-
-        if (mFragment == null) {
-            fragmentTransaction.add(R.id.fragment_container, fragment).commit()
-
-        } else {
-
-            fragmentTransaction.setCustomAnimations(
-                    R.anim.enter_from_right, R.anim.exit_to_left,
-                    R.anim.enter_from_left, R.anim.exit_to_right)
-            fragmentTransaction.replace(R.id.fragment_container, fragment)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
-
-
-        }
-
-        mFragment = fragment
-    }
-
     override fun openWebView(activity: Activity, url: String) {
         FinestWebView.Builder(activity).show(url)
     }

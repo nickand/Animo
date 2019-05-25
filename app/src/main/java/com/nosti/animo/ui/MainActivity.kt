@@ -8,6 +8,9 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.nosti.animo.R
 import com.nosti.animo.ui.main.AnimoFragment
 import com.thefinestartist.finestwebview.FinestWebView
@@ -23,14 +26,6 @@ class MainActivity : AppCompatActivity(), OnSetTitleAndNavigateListener {
         super.onCreate(savedInstanceState)
 
         initViews()
-
-        navigateToAnimoFragment()
-    }
-
-    private fun navigateToAnimoFragment() {
-        val fragment: Fragment?
-        fragment = AnimoFragment.newInstance()
-        navigateTo(fragment)
     }
 
     private fun initViews() {
@@ -41,7 +36,11 @@ class MainActivity : AppCompatActivity(), OnSetTitleAndNavigateListener {
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.action_dashboard -> {navigateToAnimoFragment()}
+                R.id.action_dashboard -> {
+                    findNavController(findViewById(R.id.navHostFragment))
+                }
+                R.id.action_favorite -> {}
+                R.id.action_category -> {}
             }
             true
         }
@@ -68,38 +67,6 @@ class MainActivity : AppCompatActivity(), OnSetTitleAndNavigateListener {
         toolbarTitle.text = title
     }
 
-    override fun navigateTo(fragment: Fragment) {
-        navigateTo(fragment, true)
-    }
-
-    override fun navigateTo(fragment: Fragment, addToBackStack: Boolean) {
-        val manager = supportFragmentManager
-
-        if (!addToBackStack) {
-            manager.popBackStackImmediate()
-        }
-
-        val fragmentTransaction = manager.beginTransaction()
-
-        if (mFragment == null) {
-            fragmentTransaction.add(R.id.fragment_container, fragment).commit()
-
-        } else {
-
-            /*fragmentTransaction.setCustomAnimations(
-                R.anim.enter_from_right, R.anim.exit_to_left,
-                R.anim.enter_from_left, R.anim.exit_to_right
-            )*/
-            fragmentTransaction.replace(R.id.fragment_container, fragment)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
-
-
-        }
-
-        mFragment = fragment
-    }
-
     override fun openWebView(activity: Activity, url: String) {
         FinestWebView.Builder(activity).show(url)
     }
@@ -109,9 +76,8 @@ class MainActivity : AppCompatActivity(), OnSetTitleAndNavigateListener {
     }
 
     override fun onBackPressed() {
-        containerToolbar.visibility = View.VISIBLE
         setTitleToolbar(getString(R.string.app_name))
-        navigateToAnimoFragment()
+        super.onBackPressed()
     }
 
     companion object {

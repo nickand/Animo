@@ -17,10 +17,3 @@ class DetailViewModel(private val anime: AnimeData) : ViewModel() {
             return _model
         }
 }
-
-@Suppress("UNCHECKED_CAST")
-class DetailViewModelFactory(private val anime: AnimeData) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        DetailViewModel(anime) as T
-}

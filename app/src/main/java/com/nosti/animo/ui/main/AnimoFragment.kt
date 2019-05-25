@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nosti.animo.R
 import com.nosti.animo.model.AnimoRepository
-import com.nosti.animo.ui.detail.DetailFragment
+import com.nosti.animo.ui.getViewModel
 import com.nosti.animo.ui.inflate
 import kotlinx.android.synthetic.main.fragment_animo.*
 
@@ -20,8 +20,6 @@ class AnimoFragment : Fragment() {
 
     private lateinit var viewModel: AnimoViewModel
     private lateinit var adapter: AnimoAdapter
-
-    private var mFragment: Fragment? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(R.layout.fragment_animo)
@@ -31,10 +29,7 @@ class AnimoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(
-            this,
-            AnimoViewModelFactory(AnimoRepository())
-        )[AnimoViewModel::class.java]
+        viewModel = getViewModel { AnimoViewModel(AnimoRepository())}
 
         val mLayoutManager = GridLayoutManager(activity, 3, RecyclerView.VERTICAL, false)
         animeList.layoutManager = mLayoutManager
@@ -53,38 +48,11 @@ class AnimoFragment : Fragment() {
         when (model) {
             is AnimoViewModel.UiModel.Content -> adapter.animes = model.animes
             is AnimoViewModel.UiModel.Navigation -> {
-                navigateTo(DetailFragment.newInstanceWithArguments(model.anime), false)
+                //Passing arguments with NavDirections
+                val animeDetailArg = model.anime
+                val action = AnimoFragmentDirections.actionAnimoFragmentToDetailFragment(animeDetailArg)
+                findNavController(this).navigate(action)
             }
-        }
-    }
-
-    fun navigateTo(fragment: Fragment, addToBackStack: Boolean) {
-        val manager = activity?.supportFragmentManager
-
-        val fragmentTransaction = manager?.beginTransaction()
-
-        if (mFragment == null) {
-            fragmentTransaction?.add(R.id.fragment_container, fragment)?.commit()
-
-        } else {
-
-            /*fragmentTransaction.setCustomAnimations(
-                R.anim.enter_from_right, R.anim.exit_to_left,
-                R.anim.enter_from_left, R.anim.exit_to_right
-            )*/
-            fragmentTransaction?.replace(R.id.fragment_container, fragment)
-            fragmentTransaction?.addToBackStack(null)
-            fragmentTransaction?.commit()
-
-
-        }
-
-        mFragment = fragment
-    }
-
-    companion object {
-        fun newInstance(): Fragment {
-            return AnimoFragment()
         }
     }
 }

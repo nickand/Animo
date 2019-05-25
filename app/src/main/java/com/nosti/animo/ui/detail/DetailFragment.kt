@@ -10,18 +10,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.nosti.animo.R
 import com.nosti.animo.model.AnimeData
 import com.nosti.animo.ui.OnSetTitleAndNavigateListener
+import com.nosti.animo.ui.getViewModel
 import com.nosti.animo.ui.inflate
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment(), View.OnClickListener {
-
     private lateinit var viewModel: DetailViewModel
 
     private var data: AnimeData? = null
@@ -34,7 +33,9 @@ class DetailFragment : Fragment(), View.OnClickListener {
         if (arguments != null) {
             Log.d(CLASS_TAG, " getting args")
 
-            data = arguments?.getParcelable(ARG_PARAM1)
+            data = arguments.let {
+                it?.let { argument -> DetailFragmentArgs.fromBundle(argument).animeDetail }
+            }
         }
     }
 
@@ -48,10 +49,7 @@ class DetailFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(
-            this,
-            data?.let { DetailViewModelFactory(it) }
-        )[DetailViewModel::class.java]
+        viewModel = getViewModel { data?.let { DetailViewModel(it) }!! }
 
         viewModel.model.observe(this, Observer (::updateUi))
 
@@ -105,16 +103,10 @@ class DetailFragment : Fragment(), View.OnClickListener {
         return container?.inflate(R.layout.fragment_detail)
     }
 
-    private fun initViews() {
-
-
-    }
-
     private fun getCoverImage(coverImage: String?) = when (coverImage) {
         is String -> coverImage
         else -> "res:/" + R.drawable.img_me
     }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -155,16 +147,6 @@ class DetailFragment : Fragment(), View.OnClickListener {
     }
 
     companion object {
-
-        private val ARG_PARAM1 = "param1"
         private val CLASS_TAG = DetailFragment::class.java.simpleName
-
-        fun newInstanceWithArguments(e: AnimeData?): DetailFragment {
-            val fragment = DetailFragment()
-            val args = Bundle()
-            args.putParcelable(ARG_PARAM1, e)
-            fragment.arguments = args
-            return fragment
-        }
     }
 }

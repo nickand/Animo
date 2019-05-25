@@ -46,10 +46,3 @@ class AnimoViewModel(private val animoRepository: AnimoRepository) : ViewModel()
         super.onCleared()
     }
 }
-
-@Suppress("UNCHECKED_CAST")
-class AnimoViewModelFactory(private val animoRepository: AnimoRepository) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        AnimoViewModel(animoRepository) as T
-}
