@@ -3,7 +3,6 @@ package com.nosti.animo.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.nosti.animo.model.AnimeData
 
 class DetailViewModel(private val anime: AnimeData) : ViewModel() {

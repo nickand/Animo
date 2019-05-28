@@ -1,4 +1,6 @@
-package com.nosti.animo.model
+package com.nosti.animo.model.server
+
+import com.nosti.animo.model.server.AnimoDb
 
 class AnimoRepository {
 

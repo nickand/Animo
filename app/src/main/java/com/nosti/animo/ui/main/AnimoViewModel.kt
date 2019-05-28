@@ -3,10 +3,8 @@ package com.nosti.animo.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.nosti.animo.model.Anime
 import com.nosti.animo.model.AnimeData
-import com.nosti.animo.model.AnimoRepository
+import com.nosti.animo.model.server.AnimoRepository
 import com.nosti.animo.ui.common.Scope
 import kotlinx.coroutines.launch
 

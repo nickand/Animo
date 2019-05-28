@@ -11,7 +11,7 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nosti.animo.R
-import com.nosti.animo.model.AnimoRepository
+import com.nosti.animo.model.server.AnimoRepository
 import com.nosti.animo.ui.getViewModel
 import com.nosti.animo.ui.inflate
 import kotlinx.android.synthetic.main.fragment_animo.*

@@ -9,7 +9,6 @@ import com.nosti.animo.ui.basicDiffUtil
 import com.nosti.animo.ui.inflate
 import com.nosti.animo.ui.loadUrl
 import kotlinx.android.synthetic.main.item_scalable.view.*
-import kotlin.reflect.KFunction1
 
 class AnimoAdapter(private val listener: (AnimeData) -> Unit) :
     RecyclerView.Adapter<AnimoAdapter.ViewHolder>() {
@@ -36,7 +35,7 @@ class AnimoAdapter(private val listener: (AnimeData) -> Unit) :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(anime: AnimeData) {
-            anime.attributes.posterImage?.medium?.let { itemView.thumbnail.loadUrl(it) }
+            anime.attributes?.posterImage?.medium?.let { itemView.thumbnail.loadUrl(it) }
         }
     }
 }

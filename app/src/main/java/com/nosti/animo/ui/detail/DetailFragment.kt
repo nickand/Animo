@@ -61,13 +61,13 @@ class DetailFragment : Fragment(), View.OnClickListener {
         tvShowMore.visibility = View.VISIBLE
         tvTitleDescription.visibility = View.VISIBLE
 
-        tvDetailAppName.text = model.anime.attributes.canonicalTitle
-        tvDetailDescription.text = model.anime.attributes.synopsis
+        tvDetailAppName.text = model.anime.attributes?.canonicalTitle
+        tvDetailDescription.text = model.anime.attributes?.synopsis
 
-        tvDetailAppMadeBy.text = data!!.attributes.endDate
+        tvDetailAppMadeBy.text = data!!.attributes?.endDate
 
-        val uri: Uri = parse(model.anime.attributes.posterImage?.medium)
-        val path = getCoverImage(model.anime.attributes.coverImage?.large)
+        val uri: Uri = parse(model.anime.attributes?.posterImage?.medium)
+        val path = getCoverImage(model.anime.attributes?.coverImage?.large)
         val uriCover: Uri = parse(path)
 
         activity?.applicationContext?.let {
@@ -94,7 +94,7 @@ class DetailFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setListeners() {
-        mListener!!.setTitleToolbar(data!!.attributes.canonicalTitle)
+        data!!.attributes?.canonicalTitle?.let { mListener!!.setTitleToolbar(it) }
         btnGoToWeb.setOnClickListener(this)
         tvShowMore.setOnClickListener(this)
     }
