@@ -14,7 +14,7 @@ class Converters {
         @TypeConverter
         @JvmStatic
         fun fromAnimeAttribute(animeAttributes: String): AnimeAttributes {
-            return AnimeAttributes(1,"", animeAttributes,"","","","","",null, null)
+            return AnimeAttributes(1, animeAttributes, animeAttributes, animeAttributes, animeAttributes, animeAttributes, animeAttributes, animeAttributes,null, null)
         }
     }
 }
