@@ -13,9 +13,10 @@ import retrofit2.http.GET
 data class AnimeData(
     @PrimaryKey(autoGenerate = true) var id: Int,
     @ColumnInfo(name = "anime_type") var type: String,
-    var attributes: AnimeAttributes?
+    @Embedded var attributes: AnimeAttributes?,
+    val favorite: Boolean
 ): Parcelable {
-    constructor() : this(1, "", null)
+    constructor() : this(1, "", null, false)
 }
 
 interface AnimeApiResponse {

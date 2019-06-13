@@ -1,13 +1,15 @@
 package com.nosti.animo.ui
 
 import android.app.Application
-import android.content.Context
+import androidx.room.Room
 import com.nosti.animo.R
+import com.nosti.animo.model.database.AnimeDatabase
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 
 class AnimoApp : Application() {
 
-    private var context: Context = applicationContext
+    lateinit var db: AnimeDatabase
+        private set
 
     override fun onCreate() {
         super.onCreate()
@@ -18,5 +20,10 @@ class AnimoApp : Application() {
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         )
+
+        db = Room.databaseBuilder(
+            this,
+            AnimeDatabase::class.java, "anime-db"
+        ).build()
     }
 }

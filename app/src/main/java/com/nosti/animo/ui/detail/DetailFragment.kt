@@ -1,23 +1,22 @@
 package com.nosti.animo.ui.detail
 
 import android.content.Context
-import android.net.Uri
-import android.net.Uri.parse
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import com.nosti.animo.R
 import com.nosti.animo.model.AnimeData
+import com.nosti.animo.model.server.AnimoRepository
 import com.nosti.animo.ui.OnSetTitleAndNavigateListener
-import com.nosti.animo.ui.getViewModel
-import com.nosti.animo.ui.inflate
+import com.nosti.animo.ui.common.app
+import com.nosti.animo.ui.common.getViewModel
+import com.nosti.animo.ui.common.inflate
+import com.nosti.animo.ui.common.loadUrl
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment(), View.OnClickListener {
@@ -49,14 +48,14 @@ class DetailFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = getViewModel { data?.let { DetailViewModel(it) }!! }
+        viewModel = getViewModel { data?.let { DetailViewModel(it, it.id, AnimoRepository(activity!!.app)) }!! }
 
-        viewModel.model.observe(this, Observer (::updateUi))
+        viewModel.model.observe(this, Observer(::updateUi))
 
         setListeners()
     }
 
-    private fun updateUi(model: DetailViewModel.UiModel) {
+    private fun updateUi(model: DetailViewModel.UiModel) = with(model.anime) {
         btnGoToWeb.visibility = View.VISIBLE
         tvShowMore.visibility = View.VISIBLE
         tvTitleDescription.visibility = View.VISIBLE
@@ -66,37 +65,21 @@ class DetailFragment : Fragment(), View.OnClickListener {
 
         tvDetailAppMadeBy.text = data!!.attributes?.endDate
 
-        val uri: Uri = parse(model.anime.attributes?.posterImage?.medium)
         val path = getCoverImage(model.anime.attributes?.coverImage?.large)
-        val uriCover: Uri = parse(path)
 
-        activity?.applicationContext?.let {
-            Glide.with(it)
-                .load(uri)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .apply(
-                    RequestOptions()
-                        .error(R.drawable.ic_error)
-                )
-                .into(ivDetailIconApp)
-        }
+        ivCoverApp.loadUrl(path)
+        ivDetailIconApp.loadUrl(model.anime.attributes?.posterImage?.medium.toString())
 
-        activity?.applicationContext?.let {
-            Glide.with(it)
-                .load(uriCover)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .apply(
-                    RequestOptions()
-                        .error(R.drawable.ic_error)
-                )
-                .into(ivCoverApp)
-        }
+        val icon = if (favorite) R.drawable.ic_favorite else R.drawable.ic_favorite_border
+        ivFavorite.setImageDrawable(activity?.applicationContext?.let { getDrawable(it, icon) })
     }
 
     private fun setListeners() {
         data!!.attributes?.canonicalTitle?.let { mListener!!.setTitleToolbar(it) }
         btnGoToWeb.setOnClickListener(this)
         tvShowMore.setOnClickListener(this)
+
+        ivFavorite.setOnClickListener { viewModel.onFavoriteClicked() }
     }
 
     private fun initViews(container: ViewGroup?): View? {

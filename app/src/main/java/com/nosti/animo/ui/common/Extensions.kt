@@ -1,4 +1,4 @@
-package com.nosti.animo.ui
+package com.nosti.animo.ui.common
 
 /**
  * Created by nicolas.g on 22/11/2017.
@@ -18,6 +18,10 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
+import com.nosti.animo.R
+import com.nosti.animo.ui.AnimoApp
 import kotlin.properties.Delegates
 
 fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View {
@@ -25,7 +29,14 @@ fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View {
 }
 
 fun ImageView.loadUrl(url: String) {
-    Glide.with(context).load(url).into(this)
+    Glide.with(context)
+        .load(url)
+        .transition(DrawableTransitionOptions.withCrossFade())
+        .apply(
+            RequestOptions()
+                .error(R.drawable.ic_error)
+        )
+        .into(this)
 }
 
 inline fun <reified T : Activity> Context.intentFor(body: Intent.() -> Unit): Intent =
@@ -68,6 +79,7 @@ inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffU
             override fun getNewListSize(): Int = new.size
         }).dispatchUpdatesTo(this@basicDiffUtil)
     }
+
 
 val Context.app: AnimoApp
     get() = applicationContext as AnimoApp

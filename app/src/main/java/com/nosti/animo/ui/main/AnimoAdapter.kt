@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nosti.animo.R
 import com.nosti.animo.model.AnimeData
-import com.nosti.animo.ui.basicDiffUtil
-import com.nosti.animo.ui.inflate
-import com.nosti.animo.ui.loadUrl
+import com.nosti.animo.ui.common.basicDiffUtil
+import com.nosti.animo.ui.common.inflate
+import com.nosti.animo.ui.common.loadUrl
 import kotlinx.android.synthetic.main.item_scalable.view.*
 
 class AnimoAdapter(private val listener: (AnimeData) -> Unit) :

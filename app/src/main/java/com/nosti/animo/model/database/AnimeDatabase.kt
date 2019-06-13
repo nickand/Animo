@@ -7,7 +7,6 @@ import com.nosti.animo.model.AnimeAttributes
 import com.nosti.animo.model.AnimeData
 
 @Database(entities = [AnimeData::class, AnimeAttributes::class], version = 1)
-@TypeConverters(Converters::class)
 abstract class AnimeDatabase : RoomDatabase() {
 
     abstract fun animeDao(): AnimeDAO

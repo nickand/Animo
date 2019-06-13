@@ -12,8 +12,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nosti.animo.R
 import com.nosti.animo.model.server.AnimoRepository
-import com.nosti.animo.ui.getViewModel
-import com.nosti.animo.ui.inflate
+import com.nosti.animo.ui.common.app
+import com.nosti.animo.ui.common.getViewModel
+import com.nosti.animo.ui.common.inflate
 import kotlinx.android.synthetic.main.fragment_animo.*
 
 class AnimoFragment : Fragment() {
@@ -29,7 +30,7 @@ class AnimoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = getViewModel { AnimoViewModel(AnimoRepository())}
+        viewModel = getViewModel { AnimoViewModel(AnimoRepository(activity!!.app)) }
 
         val mLayoutManager = GridLayoutManager(activity, 3, RecyclerView.VERTICAL, false)
         animeList.layoutManager = mLayoutManager
@@ -38,7 +39,7 @@ class AnimoFragment : Fragment() {
 
         adapter = AnimoAdapter(viewModel::onAnimeClicked)
         animeList.adapter = adapter
-        viewModel.model.observe(this, Observer (::updateUi))
+        viewModel.model.observe(this, Observer(::updateUi))
     }
 
     private fun updateUi(model: AnimoViewModel.UiModel) {
@@ -52,6 +53,9 @@ class AnimoFragment : Fragment() {
                 val animeDetailArg = model.anime
                 val action = AnimoFragmentDirections.actionAnimoFragmentToDetailFragment(animeDetailArg)
                 findNavController(this).navigate(action)
+            }
+            AnimoViewModel.UiModel.showUi -> {
+                viewModel.showUi()
             }
         }
     }

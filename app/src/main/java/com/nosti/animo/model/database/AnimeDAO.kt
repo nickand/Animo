@@ -16,7 +16,7 @@ interface AnimeDAO {
     fun animeCount(): Int
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAnimes(movies: List<AnimeData>)
+    fun insertAnimes(animes: List<AnimeData>)
 
     @Update
     fun updateAnime(movie: AnimeData)
