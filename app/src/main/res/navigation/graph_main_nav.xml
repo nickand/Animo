@@ -7,7 +7,7 @@
 
     <fragment
             android:id="@+id/animoFragment"
-            android:name="com.nosti.animo.ui.main.AnimoFragment"
+            android:name="com.nosti.animo.ui.favorite.FavoriteFragment"
             android:label="AnimoFragment"
             tools:layout="@layout/fragment_animo">
         <action
@@ -24,9 +24,6 @@
         <action
                 android:id="@+id/action_animoFragment_to_detailFragment"
                 app:destination="@id/animoFragment"/>
-        <argument
-                android:name="animeDetail"
-                app:argType="com.nosti.animo.model.AnimeData"/>
     </fragment>
 
     <!-- Global actions -->

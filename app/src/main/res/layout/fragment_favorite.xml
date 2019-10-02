@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@color/black_anime"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <FrameLayout
+            android:id="@+id/containerTitleText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:elevation="9dp"
+            android:orientation="vertical">
+
+    <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_favorite"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="48sp"/>
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/animeList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_anime"
+            tools:context=".activities.MainActivity"
+            app:layout_constraintTop_toBottomOf="@+id/containerTitleText"
+            android:layout_marginTop="85dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="22dp"
+            tools:listitem="@layout/item_scalable"/>
+
+    <FrameLayout
+            android:id="@+id/containerNoInternetMessage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_tyran_img"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/you_are_offline"
+                android:textSize="22sp"/>
+
+    </FrameLayout>
+
+    <com.crystal.crystalpreloaders.widgets.CrystalPreloader
+            android:id="@+id/containerProgressIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:crs_pl_bg_color="@color/black_anime"
+            app:crs_pl_fg_color="@color/black"
+            app:crs_pl_size="small"
+            app:crs_pl_style="ball_scale"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

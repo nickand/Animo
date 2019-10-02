@@ -7,20 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nosti.animo.R
-import com.nosti.animo.model.server.AnimoRepository
-import com.nosti.animo.ui.common.app
-import com.nosti.animo.ui.common.getViewModel
 import com.nosti.animo.ui.common.inflate
+import com.nosti.animo.ui.detail.DetailFragment
+import com.nosti.animo.ui.favorite.FavoriteAdapter
+import com.nosti.animo.ui.favorite.FavoriteViewModel
+import com.nosti.animo.ui.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_animo.*
+import org.koin.android.scope.currentScope
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class AnimoFragment : Fragment() {
 
-    private lateinit var viewModel: AnimoViewModel
     private lateinit var adapter: AnimoAdapter
+
+    private val viewModel: AnimoViewModel by currentScope.viewModel(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return container?.inflate(R.layout.fragment_animo)
@@ -29,8 +32,6 @@ class AnimoFragment : Fragment() {
     @SuppressLint("WrongConstant")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = getViewModel { AnimoViewModel(AnimoRepository(activity!!.app)) }
 
         val mLayoutManager = GridLayoutManager(activity, 3, RecyclerView.VERTICAL, false)
         animeList.layoutManager = mLayoutManager
@@ -49,10 +50,9 @@ class AnimoFragment : Fragment() {
         when (model) {
             is AnimoViewModel.UiModel.Content -> adapter.animes = model.animes
             is AnimoViewModel.UiModel.Navigation -> {
-                //Passing arguments with NavDirections
-                val animeDetailArg = model.anime
-                val action = AnimoFragmentDirections.actionAnimoFragmentToDetailFragment(animeDetailArg)
-                findNavController(this).navigate(action)
+                requireActivity().intent.putExtra(DetailFragment.ANIME, model.anime.id)
+                Navigation.addFragment(requireActivity().supportFragmentManager, R.id.fragmentContainer, DetailFragment())
+
             }
             AnimoViewModel.UiModel.showUi -> {
                 viewModel.showUi()

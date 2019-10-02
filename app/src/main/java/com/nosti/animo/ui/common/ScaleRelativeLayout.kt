@@ -26,9 +26,9 @@ class ScaleRelativeLayout : RelativeLayout {
     )
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val widthSize = View.MeasureSpec.getSize(widthMeasureSpec)
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
         val heightSize = (HEIGHT_RATIO / WIDTH_RATIO * widthSize).toInt()
-        val newHeightSpec = View.MeasureSpec.makeMeasureSpec(heightSize, View.MeasureSpec.EXACTLY)
+        val newHeightSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.EXACTLY)
         super.onMeasure(widthMeasureSpec, newHeightSpec)
     }
 

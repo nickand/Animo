@@ -3,15 +3,42 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:background="@color/black_anime"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+    <FrameLayout
+            android:id="@+id/containerTitleText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:elevation="9dp"
+            android:orientation="vertical">
+
+    <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="48sp"/>
+    </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/animeList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/black_anime"
             tools:context=".activities.MainActivity"
+            app:layout_constraintTop_toBottomOf="@+id/containerTitleText"
+            android:layout_marginTop="85dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="22dp"
             tools:listitem="@layout/item_scalable"/>
 
     <FrameLayout

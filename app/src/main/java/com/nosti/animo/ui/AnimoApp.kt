@@ -1,15 +1,11 @@
 package com.nosti.animo.ui
 
 import android.app.Application
-import androidx.room.Room
 import com.nosti.animo.R
-import com.nosti.animo.model.database.AnimeDatabase
+import com.nosti.animo.initDI
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 
 class AnimoApp : Application() {
-
-    lateinit var db: AnimeDatabase
-        private set
 
     override fun onCreate() {
         super.onCreate()
@@ -21,9 +17,6 @@ class AnimoApp : Application() {
                 .build()
         )
 
-        db = Room.databaseBuilder(
-            this,
-            AnimeDatabase::class.java, "anime-db"
-        ).build()
+        initDI()
     }
 }

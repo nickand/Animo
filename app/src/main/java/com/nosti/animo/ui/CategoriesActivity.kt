@@ -10,7 +10,7 @@ import com.thefinestartist.finestwebview.FinestWebView
 import kotlinx.android.synthetic.main.activity_categories.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
-class CategoriesActivity : AppCompatActivity(), OnSetTitleAndNavigateListener {
+class CategoriesActivity : AppCompatActivity(), OnNavigateListener {
 
     private var mFragment: Fragment? = null
 
@@ -23,8 +23,6 @@ class CategoriesActivity : AppCompatActivity(), OnSetTitleAndNavigateListener {
     }
 
     private fun initViews() {
-
-        setTitleToolbar(getString(R.string.category))
         setSupportActionBar(containerToolbar)
     }
 
@@ -36,10 +34,6 @@ class CategoriesActivity : AppCompatActivity(), OnSetTitleAndNavigateListener {
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
-
-    override fun setTitleToolbar(title: String) {
-        toolbarTitle.setText(title)
     }
 
     override fun openWebView(activity: Activity, url: String) {

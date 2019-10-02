@@ -15,7 +15,11 @@
     <string name="error_network">Problemas de conexión</string>
     <string name="category">Categories</string>
     <string name="about_me">About me</string>
-    <string name="text_dashboard">Dashboard</string>
+    <string name="text_home">Home</string>
     <string name="text_favorite">Favorites</string>
     <string name="text_category">Category</string>
+    <string name="title_favorite">Favorites</string>
+    <string name="text_search">Search</string>
+    <string name="search">Search</string>
+    <string name="search_post">Search naruto, bleach, one piece...</string>
 </resources>

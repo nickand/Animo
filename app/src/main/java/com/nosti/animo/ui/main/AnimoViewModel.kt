@@ -2,12 +2,16 @@ package com.nosti.animo.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.nosti.animo.model.AnimeData
-import com.nosti.animo.model.server.AnimoRepository
 import com.nosti.animo.ui.common.ScopedViewModel
+import com.nosti.domain.AnimeData
+import com.nosti.usecases.GetPopularAnimes
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
-class AnimoViewModel(private val animoRepository: AnimoRepository) : ScopedViewModel() {
+class AnimoViewModel(
+    private val getPopularAnimes: GetPopularAnimes,
+    uiDispatcher: CoroutineDispatcher
+) : ScopedViewModel(uiDispatcher) {
 
     private val uiModel = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
@@ -34,7 +38,7 @@ class AnimoViewModel(private val animoRepository: AnimoRepository) : ScopedViewM
     fun showUi() {
         launch {
             uiModel.value = UiModel.Loading
-            uiModel.value = UiModel.Content(animoRepository.findPopularAnimes())
+            uiModel.value = UiModel.Content(getPopularAnimes.invoke())
         }
     }
 

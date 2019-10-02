@@ -1,11 +1,8 @@
-package com.nosti.animo.model
+package com.nosti.animo.data
 
 import android.os.Parcelable
 import androidx.room.*
-import com.nosti.animo.model.database.Anime
 import kotlinx.android.parcel.Parcelize
-import kotlinx.coroutines.Deferred
-import retrofit2.http.GET
 
 //region Anime POJO
 @Parcelize
@@ -17,11 +14,4 @@ data class AnimeData(
     val favorite: Boolean
 ): Parcelable {
     constructor() : this(1, "", null, false)
-}
-
-interface AnimeApiResponse {
-
-    @GET("api/edge/anime")
-    fun getAnimeList(): Deferred<Anime>
-
 }

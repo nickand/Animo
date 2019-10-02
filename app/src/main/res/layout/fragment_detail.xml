@@ -32,7 +32,7 @@
 
         <TextView
                 android:id="@+id/tvDetailAppName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
@@ -42,6 +42,9 @@
                 app:layout_constraintLeft_toRightOf="@+id/ivDetailIconApp"
                 app:layout_constraintTop_toBottomOf="@+id/ivCoverApp"
                 tools:layout_editor_absoluteX="95dp"
+                app:layout_constraintStart_toEndOf="@+id/ivDetailIconApp"
+                app:layout_constraintEnd_toStartOf="@+id/ivFavorite"
+                android:layout_marginEnd="4dp"
                 tools:text="APP"/>
 
         <ImageView

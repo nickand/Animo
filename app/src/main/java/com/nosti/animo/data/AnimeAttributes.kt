@@ -1,9 +1,8 @@
-package com.nosti.animo.model
+package com.nosti.animo.data
 
 import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
@@ -11,13 +10,13 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 data class AnimeAttributes(
     @PrimaryKey(autoGenerate = true) var attributeId: Int,
-    var createdAt: String,
-    var synopsis: String,
-    var canonicalTitle: String,
-    var averageRating: String,
-    var startDate: String,
-    var ageRatingGuide: String,
-    var endDate: String,
+    var createdAt: String? = "",
+    var synopsis: String? = "",
+    var canonicalTitle: String? = "",
+    var averageRating: String? = "",
+    var startDate: String? = "",
+    var ageRatingGuide: String? = "",
+    var endDate: String? = "",
     @Embedded var coverImage: AnimeCoverImage?,
     @Embedded var posterImage: AnimePosterImage?
 ) : Parcelable {

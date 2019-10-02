@@ -1,13 +1,15 @@
-package com.nosti.animo.model.database
+package com.nosti.animo.data.database
 
 import androidx.room.*
-import com.nosti.animo.model.AnimeData
 
 @Dao
 interface AnimeDAO {
 
     @Query("SELECT * FROM AnimeData")
     fun getAll(): List<AnimeData>
+
+    @Query("SELECT * FROM AnimeData WHERE favorite = 1 ORDER BY id ASC")
+    fun getAllFavorites(): List<AnimeData>
 
     @Query("SELECT * FROM AnimeData WHERE id = :id")
     fun findById(id: Int): AnimeData
@@ -19,5 +21,5 @@ interface AnimeDAO {
     fun insertAnimes(animes: List<AnimeData>)
 
     @Update
-    fun updateAnime(movie: AnimeData)
+    fun updateAnime(anime: AnimeData)
 }

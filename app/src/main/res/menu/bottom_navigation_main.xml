@@ -4,19 +4,19 @@
     <item
             android:id="@+id/action_dashboard"
             android:enabled="true"
-            android:icon="@drawable/ic_dashboard"
-            android:title="@string/text_dashboard"
+            android:icon="@drawable/ic_home"
+            android:title="@string/text_home"
+            app:showAsAction="ifRoom" />
+    <item
+            android:id="@+id/action_search"
+            android:enabled="true"
+            android:icon="@drawable/ic_search"
+            android:title="@string/text_search"
             app:showAsAction="ifRoom" />
     <item
             android:id="@+id/action_favorite"
             android:enabled="true"
             android:icon="@drawable/ic_favorite_active"
             android:title="@string/text_favorite"
-            app:showAsAction="ifRoom" />
-    <item
-            android:id="@+id/action_category"
-            android:enabled="true"
-            android:icon="@drawable/ic_category"
-            android:title="@string/text_category"
             app:showAsAction="ifRoom" />
 </menu>

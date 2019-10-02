@@ -2,12 +2,15 @@ package com.nosti.animo.ui.main
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.nosti.animo.R
-import com.nosti.animo.model.AnimeData
 import com.nosti.animo.ui.common.basicDiffUtil
 import com.nosti.animo.ui.common.inflate
 import com.nosti.animo.ui.common.loadUrl
+import com.nosti.animo.ui.common.setRoundCorners
+import com.nosti.domain.AnimeData
 import kotlinx.android.synthetic.main.item_scalable.view.*
 
 class AnimoAdapter(private val listener: (AnimeData) -> Unit) :
@@ -34,7 +37,14 @@ class AnimoAdapter(private val listener: (AnimeData) -> Unit) :
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        lateinit var animeImage: AppCompatImageView
+        lateinit var animeTitle: TextView
+
         fun bind(anime: AnimeData) {
+            animeImage = itemView.findViewById(R.id.thumbnail)
+            animeTitle = itemView.findViewById(R.id.titleAnime)
+            animeTitle.text = anime.attributes?.canonicalTitle
+            animeImage.setRoundCorners(R.dimen.spacing_xxxs)
             anime.attributes?.posterImage?.medium?.let { itemView.thumbnail.loadUrl(it) }
         }
     }

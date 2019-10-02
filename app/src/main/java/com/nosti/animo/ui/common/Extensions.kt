@@ -6,9 +6,11 @@ package com.nosti.animo.ui.common
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Outline
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -80,6 +82,21 @@ inline fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffU
         }).dispatchUpdatesTo(this@basicDiffUtil)
     }
 
+fun View.setRoundCorners(radiusRes: Int) {
+    this.clipToOutline = true
+    this.outlineProvider = object : ViewOutlineProvider() {
+        override fun getOutline(view: View?, outline: Outline?) {
+            outline?.setRoundRect(
+                0,
+                0,
+                view!!.width,
+                view.height,
+                view.context.resources.getDimension(radiusRes)
+            )
+        }
+    }
+    this.clipToOutline = true
+}
 
 val Context.app: AnimoApp
     get() = applicationContext as AnimoApp

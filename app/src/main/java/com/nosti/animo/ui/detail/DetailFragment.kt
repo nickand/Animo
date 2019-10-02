@@ -2,7 +2,6 @@ package com.nosti.animo.ui.detail
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,31 +9,46 @@ import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.nosti.animo.R
-import com.nosti.animo.model.AnimeData
-import com.nosti.animo.model.server.AnimoRepository
-import com.nosti.animo.ui.OnSetTitleAndNavigateListener
-import com.nosti.animo.ui.common.app
-import com.nosti.animo.ui.common.getViewModel
+import com.nosti.animo.ui.OnNavigateListener
 import com.nosti.animo.ui.common.inflate
 import com.nosti.animo.ui.common.loadUrl
+import com.nosti.animo.ui.search.SearchFragment
 import kotlinx.android.synthetic.main.fragment_detail.*
+import org.koin.android.scope.currentScope
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class DetailFragment : Fragment(), View.OnClickListener {
-    private lateinit var viewModel: DetailViewModel
 
-    private var data: AnimeData? = null
+    companion object {
+        private val CLASS_TAG = DetailFragment::class.java.simpleName
+        const val ANIME = "DetailFragment:anime"
+
+        fun newInstance(animeId: Int): DetailFragment {
+            val bundle = Bundle()
+            bundle.putInt(ANIME, animeId)
+            return DetailFragment().apply {
+                arguments = bundle
+                retainInstance = true
+            }
+        }
+    }
+
+    private lateinit var animeId: String
+    private lateinit var animeType: String
     private var isShowing = false
 
-    private var mListener: OnSetTitleAndNavigateListener? = null
+    private var mListener: OnNavigateListener? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            Log.d(CLASS_TAG, " getting args")
+    private val viewModel: DetailViewModel by currentScope.viewModel(this) {
+        if (requireActivity().intent.hasExtra(SearchFragment.ANIME)) {
+            animeId = requireActivity().intent.getIntExtra(SearchFragment.ANIME, -1).toString()
+            requireActivity().intent.removeExtra(SearchFragment.ANIME)
+            parametersOf(animeId.toDouble())
+        } else {
+            animeId = requireActivity().intent.getIntExtra(ANIME, -1).toString()
+            parametersOf(animeId.toDouble())
 
-            data = arguments.let {
-                it?.let { argument -> DetailFragmentArgs.fromBundle(argument).animeDetail }
-            }
         }
     }
 
@@ -48,8 +62,6 @@ class DetailFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = getViewModel { data?.let { DetailViewModel(it, it.id, AnimoRepository(activity!!.app)) }!! }
-
         viewModel.model.observe(this, Observer(::updateUi))
 
         setListeners()
@@ -60,10 +72,13 @@ class DetailFragment : Fragment(), View.OnClickListener {
         tvShowMore.visibility = View.VISIBLE
         tvTitleDescription.visibility = View.VISIBLE
 
+        animeId = model.anime.id.toString()
+        animeType = model.anime.type.toString()
+
         tvDetailAppName.text = model.anime.attributes?.canonicalTitle
         tvDetailDescription.text = model.anime.attributes?.synopsis
 
-        tvDetailAppMadeBy.text = data!!.attributes?.endDate
+        tvDetailAppMadeBy.text = model.anime.attributes?.endDate
 
         val path = getCoverImage(model.anime.attributes?.coverImage?.large)
 
@@ -75,7 +90,6 @@ class DetailFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setListeners() {
-        data!!.attributes?.canonicalTitle?.let { mListener!!.setTitleToolbar(it) }
         btnGoToWeb.setOnClickListener(this)
         tvShowMore.setOnClickListener(this)
 
@@ -93,7 +107,7 @@ class DetailFragment : Fragment(), View.OnClickListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnSetTitleAndNavigateListener) {
+        if (context is OnNavigateListener) {
             mListener = context
         } else {
             throw RuntimeException("$context must implement OnSetTitleAndNavigateListener")
@@ -108,8 +122,8 @@ class DetailFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btnGoToWeb -> {
-                val type: String = data!!.type
-                val id: String = data!!.id.toString()
+                val type: String = animeType
+                val id: String = animeId
                 val url = "$type/$id"
                 activity?.parent?.let { mListener!!.openWebView(it, "https://kitsu.io/$url") }
             }
@@ -127,9 +141,5 @@ class DetailFragment : Fragment(), View.OnClickListener {
             tvDetailDescription.maxLines = 4
             tvShowMore.setText(R.string.read_more)
         }
-    }
-
-    companion object {
-        private val CLASS_TAG = DetailFragment::class.java.simpleName
     }
 }

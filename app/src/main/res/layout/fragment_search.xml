@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/rootView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_anime">
+
+    <TextView
+            android:id="@+id/tvSearchTitle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/spacing_sm"
+            android:layout_marginBottom="10dp"
+            android:text="@string/search"
+            android:textColor="@color/white"
+            android:textSize="48sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_sm"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:layout_marginRight="@dimen/spacing_sm"
+            android:background="@drawable/bg_rounded_edit_text"
+            android:drawableStart="@drawable/ic_grey_search"
+            android:drawablePadding="@dimen/spacing_xxs"
+            android:hint="@string/search_post"
+            android:imeOptions="actionSearch"
+            android:inputType="text|textNoSuggestions"
+            android:paddingStart="@dimen/spacing_sm"
+            android:paddingTop="@dimen/spacing_xxs"
+            android:paddingEnd="@dimen/spacing_xxs"
+            android:paddingBottom="@dimen/spacing_xxs"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/tvSearchTitle" />
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSearchAnimeList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:layout_marginEnd="@dimen/spacing_sm"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/spacing_xxs"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+            app:layout_constraintTop_toBottomOf="@+id/searchEditText" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@color/grey_hex_1e"
+            app:itemBackground="@color/grey_hex_1e"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/bottom_navigation_main"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
