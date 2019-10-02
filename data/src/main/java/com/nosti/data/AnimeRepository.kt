@@ -8,11 +8,13 @@ class AnimeRepository(
 ) {
 
     suspend fun getPopularAnimes(): List<AnimeData> {
-        val animes =
-            remoteDataSource.getPopularAnimes(20)
-        localDataSource.saveAnimes(animes)
+        if (localDataSource.isEmpty()) {
+            val animes =
+                remoteDataSource.getPopularAnimes(20)
+            localDataSource.saveAnimes(animes)
+        }
 
-        return animes
+        return localDataSource.getPopularAnimes()
     }
 
     suspend fun getFavoriteAnimes(): List<AnimeData> {
