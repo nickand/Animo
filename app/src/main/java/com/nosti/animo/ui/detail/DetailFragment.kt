@@ -4,14 +4,18 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.nosti.animo.R
 import com.nosti.animo.ui.OnNavigateListener
+import com.nosti.animo.ui.common.Constants.Companion.WIKIPEDIA_BASE_URL
+import com.nosti.animo.ui.common.formatAsSimple
 import com.nosti.animo.ui.common.inflate
 import com.nosti.animo.ui.common.loadUrl
+import com.nosti.animo.ui.common.toDateWithTimeZoneAsGmt
 import com.nosti.animo.ui.search.SearchFragment
 import kotlinx.android.synthetic.main.fragment_detail.*
 import org.koin.android.scope.currentScope
@@ -23,15 +27,6 @@ class DetailFragment : Fragment(), View.OnClickListener {
     companion object {
         private val CLASS_TAG = DetailFragment::class.java.simpleName
         const val ANIME = "DetailFragment:anime"
-
-        fun newInstance(animeId: Int): DetailFragment {
-            val bundle = Bundle()
-            bundle.putInt(ANIME, animeId)
-            return DetailFragment().apply {
-                arguments = bundle
-                retainInstance = true
-            }
-        }
     }
 
     private lateinit var animeId: String
@@ -76,9 +71,37 @@ class DetailFragment : Fragment(), View.OnClickListener {
         animeType = model.anime.type.toString()
 
         tvDetailAppName.text = model.anime.attributes?.canonicalTitle
+
+        if (!model.anime.attributes?.averageRating.equals("null")) {
+            tvDetailAppRating.text =
+                when {
+                    model.anime.attributes?.averageRating?.toDouble()!! > 69 -> {
+                        tvDetailAppRating.background =
+                            getDrawable(requireActivity(), R.drawable.bg_rounded_green)
+                        model.anime.attributes?.averageRating
+                    }
+                    model.anime.attributes?.averageRating?.toDouble()!! > 49 -> {
+                        tvDetailAppRating.background =
+                            getDrawable(requireActivity(), R.drawable.bg_rounded_yellow)
+                        model.anime.attributes?.averageRating
+                    }
+                    else -> {
+                        tvDetailAppRating.background =
+                            getDrawable(requireActivity(), R.drawable.bg_rounded_red)
+                        model.anime.attributes?.averageRating
+                    }
+                }
+        } else {
+            tvDetailAppRating.visibility = GONE
+        }
+
         tvDetailDescription.text = model.anime.attributes?.synopsis
 
-        tvDetailAppMadeBy.text = model.anime.attributes?.endDate
+        tvDetailAppMadeBy.text = if (model.anime.attributes?.endDate?.equals("Ongoing")!!) {
+            model.anime.attributes?.endDate
+        } else {
+            model.anime.attributes?.endDate?.toDateWithTimeZoneAsGmt()?.formatAsSimple()
+        }
 
         val path = getCoverImage(model.anime.attributes?.coverImage?.large)
 
@@ -122,10 +145,9 @@ class DetailFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btnGoToWeb -> {
-                val type: String = animeType
-                val id: String = animeId
-                val url = "$type/$id"
-                activity?.parent?.let { mListener!!.openWebView(it, "https://kitsu.io/$url") }
+                val url =
+                    WIKIPEDIA_BASE_URL.plus(viewModel.model.value?.anime?.attributes?.canonicalTitle)
+                activity?.let { mListener?.openWebView(it, url) }
             }
             R.id.tvShowMore -> setShowMoreOrLess()
         }
